@@ -12,8 +12,6 @@ public class Play {
 		int tmpNumber = 0; //임시변수(선택)
 		boolean checkValue = false;
 		ArrayList<Bank> bank = new ArrayList<Bank>();//고객 정보를 저장해둘 보관소(컨테이너)
-
-
 		int menu=0;
 		// 메뉴구현 프로토타입
 		// 무한 반복문
