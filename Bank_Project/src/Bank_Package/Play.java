@@ -17,12 +17,9 @@ public class Play {
 		int menu=0;
 		// 메뉴구현 프로토타입
 		// 무한 반복문
-		cls();
+
 		while(true) 
 		{
-
-
-
 			//			Runtime runtime =Runtime.getRuntime();
 			//			try {
 			//				//runtime.exec("cmd /c " + cmd);
@@ -31,6 +28,7 @@ public class Play {
 			//					e.printStackTrace();
 			//				}
 			//메뉴출력
+			cls();
 			System.out.println("1.고객정보등록");
 			System.out.println("2.고객이름조회");
 			System.out.println("3.고객목록출력");
@@ -44,7 +42,6 @@ public class Play {
 			{
 			case 1:
 			{
-				cls();
 				System.out.println("고객정보등록 메뉴를 실행했습니다.");
 				for(int idx=0; idx<2; idx++) 
 				{
@@ -57,11 +54,11 @@ public class Play {
 					b.setBank(tmpName, tmpAcc, tmpBalance);
 					bank.add(b);
 				}
+				pause();
 
 			}break;
 			case 2:
 			{
-				cls();
 				System.out.println("고객이름조회 메뉴를 실행했습니다.");
 				Scanner input3 = new Scanner(System.in);
 				System.out.println("이름 이나 계좌 번호를 선택해주세요.\n1 : 이름\n2 : 계좌  "); tmpNumber = input3.nextInt();
@@ -107,21 +104,31 @@ public class Play {
 				{
 					System.out.println("1 또는 2를 적어주세요.");
 				}
+				pause();
 			}break;
 			case 3:
 			{
-				cls();
+
 				System.out.println("고객목록출력 메뉴를 실행했습니다.");
 				for(int idx=0; idx<bank.size(); idx++) 
 				{
 					bank.get(idx).putBank();
 				}
+				pause();
+
 			}break;	
 			case 4:
 			{
-				cls();
-				System.out.println("종료되었습니다.");}			
+				System.out.println("종료되었습니다.");
+				pause();
+			}break;	
+			default :{
+				System.out.println("다시메뉴를 선택해주십시오");
+				pause();
+
 			}
+			}
+
 
 		}// end of while
 
@@ -131,6 +138,13 @@ public class Play {
 	public static void cls() {
 		try {
 			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+		}catch(Exception e) {
+			System.out.println("-1에러");
+		}
+	}
+	public static void pause() {
+		try {
+			new ProcessBuilder("cmd", "/c", "pause").inheritIO().start().waitFor();
 		}catch(Exception e) {
 			System.out.println("-1에러");
 		}
