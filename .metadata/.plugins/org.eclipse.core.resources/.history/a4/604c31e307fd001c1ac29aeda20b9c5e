@@ -149,10 +149,6 @@ public class Play {
 			System.out.println("-1에러");
 		}
 		//이거 까지 올라가야함//
-		//이것도 
-		//이것도 
-		
-		
 		
 	}
 }// end of class
