@@ -1,0 +1,34 @@
+package Score_Package;
+
+
+public class Play {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Student student = new Student(); //객체 생성
+		student.setScore(); // 점수 셋팅
+		student.getTotScore(); //총점처리
+		student.getAvgScore(); //평균처리
+		student.putScore(); //점수출력
+		
+	}
+
+}
+
+
+/*
+내가한것 
+
+public class Play {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Student student = new Student();
+		student.set_Score("김성수", 90, 80, 75);
+		student.get_Score();
+
+	}
+
+}
+
+*/

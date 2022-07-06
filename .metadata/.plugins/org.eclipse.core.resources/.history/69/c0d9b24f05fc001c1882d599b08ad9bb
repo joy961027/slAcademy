@@ -1,0 +1,30 @@
+package Score_Package;
+
+/*
+내가한것 
+
+public class play {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Student student = new Student();
+		student.set_Score("김성수", 90, 80, 75);
+		student.get_Score();
+
+	}
+
+}
+
+*/
+
+public class Play {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Student student = new Student();
+		student.set_Score("김성수", 90, 80, 75);
+		student.get_Score();
+
+	}
+
+}
