@@ -148,6 +148,9 @@ public class Play {
 		}catch(Exception e) {
 			System.out.println("-1에러");
 		}
+		//이거 까지 올라가야함//
+		
+		
 		
 		
 	}
