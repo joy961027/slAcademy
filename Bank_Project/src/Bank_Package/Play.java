@@ -49,7 +49,6 @@ public class Play {
 						while(true) 
 						{
 							cls();
-							
 							System.out.println("[1] 입금");
 							System.out.println("[2] 출금");
 							System.out.println("[3] 잔액조회");
@@ -58,13 +57,13 @@ public class Play {
 							input.nextLine(); //flush
 							switch(menu) 
 							{
-							case 1 : // 2차메뉴 입금부분
+							case 1 : // 2차메뉴 입금부분 deposit()사용
 							{
 								cls();
 								System.out.print("입금액을 입력해주세요 : ");
 								tmpBalance = input.nextInt();
 								input.nextLine(); //flush
-								if(bank.get(tmpBankid).deposit(tmpBalance) != -1)
+								if(bank.get(tmpBankid).deposit(tmpBalance) != -1) //입금 기능 호출 및 에러 처리
 								{
 									System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
 									pause();
@@ -77,14 +76,14 @@ public class Play {
 
 
 							}break;
-							case 2 : // 2차메뉴 출금부분
+							case 2 : // 2차메뉴 출금부분 withdraw()사용
 							{
 								cls();
 								System.out.print("출금액을 입력해주세요 : ");
 							
 								tmpBalance = input.nextInt();
 								input.nextLine(); //flush
-								if(bank.get(tmpBankid).withdraw(tmpBalance) != -1)
+								if(bank.get(tmpBankid).withdraw(tmpBalance) != -1) //출금 기능 호출 및 에러 처리
 								{
 									System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
 									pause();
@@ -97,7 +96,7 @@ public class Play {
 
 
 							}break;
-							case 3 : // 2차메뉴 잔액조회 부분
+							case 3 : // 2차메뉴 잔액조회 부분 check()사용
 							{
 								cls();
 								System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
@@ -150,7 +149,7 @@ public class Play {
 
 	}// end of main
 
-	public static void cls() {
+	public static void cls() { // cmd창에서 cls하기 
 		try {
 			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		}catch(Exception e) {
@@ -158,7 +157,7 @@ public class Play {
 		}
 	}
 
-	public static void pause() {
+	public static void pause() { // cmd창에서 pause하기
 		try {
 			new ProcessBuilder("cmd", "/c", "pause").inheritIO().start().waitFor();
 		}catch(Exception e) {
