@@ -16,7 +16,7 @@ public class Play {
 		
 		bank.add(new Bank()); bank.add(new Bank());
 		bank.get(0).setBank("park", "456", 200);bank.get(1).setBank("kim", "123", 100);
-		Scanner inputMenu = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		
 		while(true) //1차 메뉴구성
 		{
@@ -24,7 +24,8 @@ public class Play {
 			System.out.println("[1] 계좌번호 입력");
 			System.out.println("[2] 프로그램종료");
 			System.out.print("메뉴 입력 : ");
-			menu = inputMenu.nextInt();
+			menu = input.nextInt();
+			input.nextLine(); //flush
 			switch(menu) 
 			{
 			case 1 : //1번입력 부분 
@@ -33,8 +34,8 @@ public class Play {
 				{
 					cls();
 					System.out.print("계좌번호를 입력해주세요 : ");
-					Scanner inputAcc = new Scanner(System.in);
-					tmpAcc = inputAcc.nextLine();
+					tmpAcc = input.nextLine();
+					input.nextLine(); //flush
 					for(int idx=0;idx<bank.size(); idx++) 
 					{
 						if(bank.get(idx).getBankAccount().equals(tmpAcc)) 
@@ -48,20 +49,21 @@ public class Play {
 						while(true) 
 						{
 							cls();
-							inputMenu.nextLine();
+							
 							System.out.println("[1] 입금");
 							System.out.println("[2] 출금");
 							System.out.println("[3] 잔액조회");
 							System.out.println("[4] 종료");
-							menu = inputMenu.nextInt();
+							menu = input.nextInt();
+							input.nextLine(); //flush
 							switch(menu) 
 							{
 							case 1 : // 2차메뉴 입금부분
 							{
 								cls();
 								System.out.print("입금액을 입력해주세요 : ");
-								Scanner inputBalance = new Scanner(System.in);
-								tmpBalance = inputBalance.nextInt();
+								tmpBalance = input.nextInt();
+								input.nextLine(); //flush
 								if(bank.get(tmpBankid).deposit(tmpBalance) != -1)
 								{
 									System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
@@ -79,8 +81,9 @@ public class Play {
 							{
 								cls();
 								System.out.print("출금액을 입력해주세요 : ");
-								Scanner inputBalance = new Scanner(System.in);
-								tmpBalance = inputBalance.nextInt();
+							
+								tmpBalance = input.nextInt();
+								input.nextLine(); //flush
 								if(bank.get(tmpBankid).withdraw(tmpBalance) != -1)
 								{
 									System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
