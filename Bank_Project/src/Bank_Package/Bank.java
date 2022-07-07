@@ -32,28 +32,32 @@ public class Bank {
 	}// end of getBankBalance()
 	
 
-	public void deposit(int Money) {
+	public int deposit(int Money) {
 		
 		if(Money<0) {
 			System.out.println("음수가 입력되었습니다.");
+			return (-1);
 		}else {
 			bBalance +=Money;
+			return 0;
 		}
 		
 	}// end of deposit()
 	
-	public void withdraw(int Money) {
+	public int withdraw(int Money) {
 		
 		if(Money>bBalance) {
 			System.out.println("잔액보다 많이 출금할수 없습니다.");
+			return (-1);
 		}else {
 			bBalance -= Money;
+			return (0);
 		}
 		
 	}// end of withdraw()
 	
-	public void check() {
-		System.out.println("잔액은 :" + this.getBankBalance());
+	public int check() {
+		return(this.getBankBalance());
 		
 	}// end of check()
 	
