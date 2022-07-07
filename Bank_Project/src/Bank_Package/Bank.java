@@ -1,6 +1,5 @@
 package Bank_Package;
 
-import java.util.Scanner;
 
 
 
@@ -61,7 +60,7 @@ public class Bank {
 		
 	}// end of check()
 	
-	
+	///////////////////////////////////////실무에서 처리할만한 에러는 글자입력과 공백입력 에러 찾아보기/////////////////////////////
 	
 	
 }//end of Bank class

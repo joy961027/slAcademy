@@ -104,6 +104,7 @@ public class Play {
 							}break;
 							case 4  : // 2차메뉴 종료
 							{
+								input.close();
 								cls();
 								System.out.println("프로그램이 종료됩니다.");
 								pause();
@@ -135,6 +136,7 @@ public class Play {
 				System.exit(0);
 			}break;
 			default : { //1차 메뉴 1,2 제외 다른것 선택일경우
+				input.close();
 				cls();
 				System.out.println("다시입력해주세요");
 				pause();
