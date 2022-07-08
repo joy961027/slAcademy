@@ -1,152 +1,214 @@
 package Bank_Package;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Play {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException,FileNotFoundException, ClassNotFoundException {
+
+
 		String tmpAcc = null;//임시변수(계좌번호)
 		int tmpBalance = 0; //임시변수(잔액)
 		int tmpBankid = 0; //계좐번호 id
 		int menu=0;  //메뉴번호
 		boolean checkValue = false; // 계좌번호 찾기 불값
-		
 		//컨테이너에 미리 2~3명의 젇보 입력
-		ArrayList<Bank> bank = new ArrayList<Bank>();//고객 정보를 저장해둘 보관소(컨테이너)
+		FileOutputStream fileoutputStream = new FileOutputStream("D:\\file\\Bank.txt");
+
+		//객체저장스트림(객체를 파일스트림과 연결한다.)-파이프연결
+
+		BufferedOutputStream bufferedoutputStream = new BufferedOutputStream(fileoutputStream);
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedoutputStream);
+
+		//저장할객체들의 내용과 그것들을 컨테이너에 저장해둠(고객들의 이름만 저장해본다) 
+
+		ArrayList<Bank> userNames = new ArrayList<Bank>();
+		Bank b1 = new Bank("kim","111",100);
+		Bank b2 = new Bank("park","222",200);
+		Bank b3 = new Bank("choi","333",300);
+		Bank b4 = new Bank("lee","444",400);
 		
-		bank.add(new Bank()); bank.add(new Bank());
-		bank.get(0).setBank("park", "456", 200);bank.get(1).setBank("kim", "123", 100);
-		Scanner input = new Scanner(System.in);
+		userNames.add(b1);
+		userNames.add(b2);
+		userNames.add(b3);
+		userNames.add(b4);
+//		
+		//컨테이너에 저장된것들을 통째로 파일에 저장한다.(객체스트림-->파일스트림-->실제파일에 저장)
+		objectOutputStream.writeObject(b1);
+		objectOutputStream.writeObject(b3);
+		objectOutputStream.writeObject(userNames);
+		objectOutputStream.close();//스트림들을 닫는다.
+
+
+
+		FileInputStream fileoutStream = new FileInputStream("D:\\file\\Bank.txt");
+		BufferedInputStream bufferedinputStream = new BufferedInputStream(fileoutStream);
+		ObjectInputStream objectInputSteam = new ObjectInputStream(bufferedinputStream);
+		Bank bank1 = (Bank) objectInputSteam.readObject();
+		Bank bank3 = (Bank) objectInputSteam.readObject();
+		ArrayList<Bank> bank =(ArrayList<Bank>) objectInputSteam.readObject();
+		objectInputSteam.close();
+		bank1.putBank();
+		bank3.putBank();
+		for(int idx=0; idx<bank.size(); idx++) {
+			bank.get(idx).putBank();
+		}
+			
+	
+//		 String filename = "D:\\file\\Bank.txt";
+//	     File f = new File(filename);
+//	     ArrayList<Bank> bank = new ArrayList<Bank>();
+//	     FileReader fr = new FileReader(filename);
+//	        BufferedReader br = new BufferedReader(fr);
+//	 
+//	     String line;
+//	     String[] arr = null;
+//	 
+//	        // 프로그램 실행 시 전화번호부 읽어들이기
+//	     if (f.exists()) {
+//	         while ((line = br.readLine()) != null) { // 한줄씩 읽어들임
+//	             arr = line.split(",");
+//	             bank.add(new Bank(arr[0], arr[1], Integer.parseInt(arr[2])));
+//	            }
+//	        }
 		
-		while(true) //1차 메뉴구성
-		{
-			cls();
-			System.out.println("[1] 계좌번호 입력");
-			System.out.println("[2] 프로그램종료");
-			System.out.print("메뉴 입력 : ");
-			menu = input.nextInt();
-			input.nextLine(); //flush
-			switch(menu) 
-			{
-			case 1 : //1번입력 부분 
-			{
-				while(true) 
-				{
-					cls();
-					System.out.print("계좌번호를 입력해주세요 : ");
-					tmpAcc = input.nextLine();
-					input.nextLine(); //flush
-					for(int idx=0;idx<bank.size(); idx++) 
-					{
-						if(bank.get(idx).getBankAccount().equals(tmpAcc)) 
-						{
-							checkValue = true;
-							tmpBankid = idx;
-						}
-					}
-					if(checkValue){
-						//2차 메뉴구성
-						while(true) 
-						{
-							cls();
-							System.out.println("[1] 입금");
-							System.out.println("[2] 출금");
-							System.out.println("[3] 잔액조회");
-							System.out.println("[4] 종료");
-							menu = input.nextInt();
-							input.nextLine(); //flush
-							switch(menu) 
-							{
-							case 1 : // 2차메뉴 입금부분 deposit()사용
-							{
-								cls();
-								System.out.print("입금액을 입력해주세요 : ");
-								tmpBalance = input.nextInt();
-								input.nextLine(); //flush
-								if(bank.get(tmpBankid).deposit(tmpBalance) != -1) //입금 기능 호출 및 에러 처리
-								{
-									System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
-									pause();
-								}
-								else
-								{
-									pause();
-									continue;
-								}
-
-
-							}break;
-							case 2 : // 2차메뉴 출금부분 withdraw()사용
-							{
-								cls();
-								System.out.print("출금액을 입력해주세요 : ");
-							
-								tmpBalance = input.nextInt();
-								input.nextLine(); //flush
-								if(bank.get(tmpBankid).withdraw(tmpBalance) != -1) //출금 기능 호출 및 에러 처리
-								{
-									System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
-									pause();
-								}
-								else
-								{
-									pause();
-									continue;
-								}
-
-
-							}break;
-							case 3 : // 2차메뉴 잔액조회 부분 check()사용
-							{
-								cls();
-								System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
-								pause();
-							}break;
-							case 4  : // 2차메뉴 종료
-							{
-								input.close();
-								cls();
-								System.out.println("프로그램이 종료됩니다.");
-								pause();
-								System.exit(0); 
-							}
-							default : // 2차메뉴 1,2,3,4 외 다른것을 입력할경우
-							{
-								cls();
-								System.out.println("다시입력해주세요");
-								pause();
-							}
-							
-							}
-						}// end of while
-					}else // 1차메뉴에서 계좌번호가 틀린경우
-					{
-						cls();
-						System.out.println("계좌번호가 존재하지 않습니다. 다시 입력해주세요");
-						pause();
-						continue;
-					}
-				}//end of while
-			}
-			case 2 : //1차메뉴 종료부분
-			{
-				cls();
-				System.out.println("프로그램이 종료됩니다.");
-				pause();
-				System.exit(0);
-			}break;
-			default : { //1차 메뉴 1,2 제외 다른것 선택일경우
-				input.close();
-				cls();
-				System.out.println("다시입력해주세요");
-				pause();
-			}
-
-
-			}// end of switch
-
-
-		}// end of while
+//		while(true) //1차 메뉴구성
+//		{
+//
+//			cls();			
+//			System.out.println("[1] 계좌번호 입력");
+//			System.out.println("[2] 프로그램종료");
+//			System.out.print("메뉴 입력 : ");
+//			Scanner input = new Scanner(System.in);
+//			menu = input.nextInt();
+//			input.nextLine(); //flush
+//			switch(menu) 
+//			{
+//			case 1 : //1번입력 부분 
+//			{
+//				while(true) 
+//				{
+//					cls();
+//					System.out.print("계좌번호를 입력해주세요 : ");
+//					tmpAcc = input.nextLine();
+//					for(int idx=0;idx<bank.size(); idx++) 
+//					{
+//						if(bank.get(idx).getBankAccount().equals(tmpAcc)) 
+//						{
+//							checkValue = true;
+//							tmpBankid = idx;
+//						}
+//					}
+//					if(checkValue){
+//						//2차 메뉴구성
+//						while(true) 
+//						{
+//							cls();
+//
+//							System.out.println("[1] 입금");
+//							System.out.println("[2] 출금");
+//							System.out.println("[3] 잔액조회");
+//							System.out.println("[4] 종료");
+//							menu = input.nextInt();
+//							input.nextLine(); //flush
+//							switch(menu) 
+//							{
+//							case 1 : // 2차메뉴 입금부분 deposit()사용
+//							{
+//								cls();
+//								System.out.print("입금액을 입력해주세요 : ");
+//								tmpBalance = input.nextInt();
+//								input.nextLine(); //flush
+//								if(bank.get(tmpBankid).deposit(tmpBalance) != -1) //입금 기능 호출 및 에러 처리
+//								{
+//									System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
+//									pause();
+//								}
+//								else
+//								{
+//									pause();
+//									continue;
+//								}
+//
+//
+//							}break;
+//							case 2 : // 2차메뉴 출금부분 withdraw()사용
+//							{
+//								cls();
+//								System.out.print("출금액을 입력해주세요 : ");
+//								tmpBalance = input.nextInt();
+//								input.nextLine(); //flush
+//								if(bank.get(tmpBankid).withdraw(tmpBalance) != -1) //출금 기능 호출 및 에러 처리
+//								{
+//									System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
+//									pause();
+//								}
+//								else
+//								{
+//									pause();
+//									continue;
+//								}
+//
+//
+//							}break;
+//							case 3 : // 2차메뉴 잔액조회 부분 check()사용
+//							{
+//								cls();
+//								System.out.println("현재 잔액은 " + bank.get(tmpBankid).check() +"입니다"); 
+//								pause();
+//							}break;
+//							case 4  : // 2차메뉴 종료
+//							{
+//								cls();
+//								System.out.println("프로그램이 종료됩니다.");
+//								pause();
+//								System.exit(0); 
+//							}
+//							default : // 2차메뉴 1,2,3,4 외 다른것을 입력할경우
+//							{
+//								cls();
+//								System.out.println("다시입력해주세요");
+//								pause();
+//							}
+//
+//							}
+//						}// end of while
+//					}else // 1차메뉴에서 계좌번호가 틀린경우
+//					{
+//						cls();
+//						System.out.println("계좌번호가 존재하지 않습니다. 다시 입력해주세요");
+//						pause();
+//						continue;
+//					}
+//				}//end of while
+//			}
+//			case 2 : //1차메뉴 종료부분
+//			{
+//				cls();
+//				System.out.println("프로그램이 종료됩니다.");
+//				pause();
+//				System.exit(0);;
+//			}
+//			default : { //1차 메뉴 1,2 제외 다른것 선택일경우
+//				input.close();
+//				cls();
+//				System.out.println("다시입력해주세요");
+//				pause();
+//			}
+//
+//
+//			}// end of switch
+//
+//
+//		}// end of while
 
 
 	}// end of main

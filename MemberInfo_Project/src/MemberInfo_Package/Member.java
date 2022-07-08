@@ -1,15 +1,19 @@
 package MemberInfo_Package;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Member {
+public class Member implements Serializable {
 //	로그인 기능을 클래스로 구현해보자.
 //
 
 //	@회원정보클래스(Member)의 구조
 //	데이터
 //	*회원이름(String), 아이디(String), 암호(String), 핸드폰번호(String);
-	String mName, mId, mPass, mPhone ="";
+	protected String mName;
+	protected String mId;
+	protected String mPass;
+	protected String mPhone ="";
 
 //	*회원정보를 모두 입력받아서 저장할수 있는 기능(setMemberInfo)
 	public void setMemberInfo() {
