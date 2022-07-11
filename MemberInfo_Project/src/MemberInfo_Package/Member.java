@@ -3,7 +3,7 @@ package MemberInfo_Package;
 import java.io.Serializable;
 import java.util.Scanner;
 
-public class Member implements Serializable {
+abstract class Member implements Serializable {
 //	로그인 기능을 클래스로 구현해보자.
 //
 
@@ -16,18 +16,19 @@ public class Member implements Serializable {
 	protected String mPhone ="";
 
 //	*회원정보를 모두 입력받아서 저장할수 있는 기능(setMemberInfo)
-	public void setMemberInfo() {
-		Scanner input = new Scanner(System.in);
-		System.out.print("이름을 입력해주세요 : ");
-		mName= input.nextLine();
-		System.out.print("아이디를 입력해주세요 : ");
-		mId = input.nextLine();
-		System.out.print("비밀번호를 입력해주세요 : ");
-		mPass = input.nextLine();
-		System.out.print("핸드폰번호를 입력해주세요 : ");
-		mPhone = input.nextLine();
-
-	}
+	abstract void setMemberInfo(); 
+//	{
+//		Scanner input = new Scanner(System.in);
+//		System.out.print("이름을 입력해주세요 : ");
+//		mName= input.nextLine();
+//		System.out.print("아이디를 입력해주세요 : ");
+//		mId = input.nextLine();
+//		System.out.print("비밀번호를 입력해주세요 : ");
+//		mPass = input.nextLine();
+//		System.out.print("핸드폰번호를 입력해주세요 : ");
+//		mPhone = input.nextLine();
+//
+//	}
 //	*모든 회워정보를 출력하는 기능(putMemberInfo).
 	public void putMemberInfo() {
 		System.out.println(mName + " " + mId + " " + mPass + " " + mPhone);

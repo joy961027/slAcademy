@@ -36,11 +36,24 @@ public class VIP extends Member {
 		mAge = input.nextInt();
 		input.nextLine();
 	}
-	
+
 	public void putMemberInfo() {
 		System.out.println(mName + " " + mId + " " + mPass + " " + mPhone+" " + tmpmGender +" " + mAddress+" " + mAge);
-		
+
 	}
+
+	public boolean getMemberGender() {
+		return (mGender);
+	}
+
+	public String getMemberAddress() {
+		return (mAddress);
+	}
+
+	public int getMemberAge() {
+		return (mAge);
+	}
+
 
 
 }

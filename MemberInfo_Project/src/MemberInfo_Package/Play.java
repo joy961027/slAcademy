@@ -14,34 +14,36 @@ import java.util.Scanner;
 public class Play {
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
-		int menu=0;
-		int tmpIdcode = 0;
-		String tmpMid=null;
-		String tmpCheck= null;
-		int tmpError = -1;
-		boolean checkvalue= false;
-		ArrayList<VIP> listvip = new ArrayList<VIP>();
-		VIP vip = new VIP();
+		int menu=0;   //사용자에게 입력받는 메뉴 번호
+		int tmpIdcode = 0; // 특정 회원을 찾는 list.get(tmipIdcode)부분
+		String tmpMid=null; // 사용자에게 입력받는 아이디
+		String tmpCheck= null;// 사용자에게 입력받는 초기화 할건지 안할건지 선택하는 부분
+		int tmpError = 0; // 파일 입출력 받을때 파일이 없으면 에러코드 부분
+		boolean checkvalue= false; // 특정 회원을 찾아서 실행하는 부분
+		ArrayList<VIP> listvip = new ArrayList<VIP>(); // 어레이리스트 객체
+		VIP vip = new VIP(); // 처음객체
 		while(true) {
 			cls();
-			Scanner input = new Scanner(System.in);
+			Scanner input = new Scanner(System.in); //스캐너
+			////////////////////////메뉴//////////////////////////////////////
 			System.out.println("[1] 회원정보 등록");
 			System.out.println("[2] 전체회원정보 불러오기");
 			System.out.println("[3] 전체회원정보 출력하기");
-			System.out.println("[4] 특정회원정보를 출력하기");
+			System.out.println("[4] 특정회원정보 출력하기");
 			System.out.println("[5] 회원정보 전부 초기화");
-			System.out.println("[6] 종료");
+			System.out.println("[6] 특정회원정보 제거");
+			System.out.println("[7] 종료");
 			System.out.print("메뉴 선택 : ");
-			menu =input.nextInt();
-			input.nextLine();
+			menu =input.nextInt(); // 메뉴 입력받기
+			input.nextLine(); //flush
 
 			switch(menu) {
-			case 1: {
+			case 1: { //1번메뉴
 				cls();
-				tmpError = 0;
+				tmpError = 0; //에러코드 초기화
 				try {
 					FileInputStream fileinputStream = new FileInputStream("D:\\Convenience_Store\\data\\Member.txt");
-					//커스텀 클래스(직접제작한 특수한클래스)를 연결시키는부분
+					//커스텀 클래스(직접제작한 특수한클래스)를 연결시키는부분 
 					BufferedInputStream bufferedinputStream = new BufferedInputStream(fileinputStream);
 					//최종적으로 객체의 일기(read)를 위한 부분
 					ObjectInputStream objectInputSteam = new ObjectInputStream(bufferedinputStream);
@@ -49,7 +51,7 @@ public class Play {
 					listvip = (ArrayList<VIP>) objectInputSteam.readObject();
 					//			ArrayList<Product> listproduct =(ArrayList<Product>)  objectInputSteam.readObject();
 					objectInputSteam.close();//스트림들을 닫는다
-					
+
 					FileOutputStream fileoutputStream = new FileOutputStream("D:\\Convenience_Store\\data\\Member.txt");
 					//객체저장스트림(객체를 파일스트림과 연결한다.)-파이프연결
 					BufferedOutputStream bufferedoutputStream = new BufferedOutputStream(fileoutputStream);
@@ -62,7 +64,7 @@ public class Play {
 					objectOutputStream.close();//스트림들을 닫는다.
 					System.out.println("회원정보가 등록되었습니다.");
 					pause();
-				}catch (Exception e) {
+				}catch (Exception e) { // 에러 
 					System.out.println("파일이 존재 하지 않습니다.");
 					tmpError = -1;
 				}finally {
@@ -103,11 +105,15 @@ public class Play {
 				}
 			}break;
 			case 3 :{
-				cls();
-				System.out.println("전체회원정보를 출력합니다.");
-				for(int idx=0; idx <listvip.size(); idx++){
-					listvip.get(idx).putMemberInfo();
+				cls();if(listvip.size()!=0) {
+					System.out.println("전체회원정보를 출력합니다.");
+					for(int idx=0; idx <listvip.size(); idx++){
+						listvip.get(idx).putMemberInfo();
+					}
+				}else {
+					System.out.println("회원정보를 먼저 불러와주세요!");
 				}
+
 				pause();
 
 			}break;
@@ -122,7 +128,7 @@ public class Play {
 						checkvalue= true;
 						tmpIdcode = idx;
 					}
-					}
+				}
 				if(checkvalue) {
 					listvip.get(tmpIdcode).putMemberInfo();
 				}else {
@@ -166,14 +172,50 @@ public class Play {
 			}break;
 			case 6 :{
 				cls();
+				checkvalue=false;
+				System.out.println("특정회원정보를 제거합니다.");
+				System.out.print("아이디를 입력해주세요 : ");
+				tmpMid = input.nextLine();
+				for(int idx=0; idx <listvip.size(); idx++){
+					if(listvip.get(idx).getMemberId().equals(tmpMid)) {
+						checkvalue= true;
+						tmpIdcode = idx;
+					}
+				}
+				if(checkvalue) {
+					System.out.print("비밀번호를 입력해주세요 : ");
+					tmpMid = input.nextLine();
+					if(listvip.get(tmpIdcode).getMemberPass().equals(tmpMid)) {
+						listvip.remove(tmpIdcode);
+						FileOutputStream fileoutputStream = new FileOutputStream("D:\\Convenience_Store\\data\\Member.txt");
+						//객체저장스트림(객체를 파일스트림과 연결한다.)-파이프연결
+						BufferedOutputStream bufferedoutputStream = new BufferedOutputStream(fileoutputStream);
+						ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedoutputStream);
+						//저장할객체들의 내용과 그것들을 컨테이너에 저장해둠(고객들의 이름만 저장해본다) 
+						//컨테이너에 저장된것들을 통째로 파일에 저장한다.(객체스트림-->파일스트림-->실제파일에 저장)
+						objectOutputStream.writeObject(listvip);
+						objectOutputStream.close();//스트림들을 닫는다.
+						System.out.println("제거되었습니다.");
+					}else {
+						System.out.println("비밀번호가 틀렸습니다.");
+					}
+				}else {
+					System.out.println("일치하는 아이디가 없습니다.");
+				}
+				pause();
+
+			}break;
+			case 7 :{
+				cls();
 				System.out.println("종료합니다.");
 				pause();
 				System.exit(0);
+
 			}break;
 
 			default :{
 				cls();
-				System.out.println("1~6까지의 숫자를 입력해주세요");
+				System.out.println("1~7까지의 숫자를 입력해주세요");
 				pause();
 			}
 			}//end of switch
