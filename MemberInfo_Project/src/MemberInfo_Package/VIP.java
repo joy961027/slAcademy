@@ -2,13 +2,15 @@ package MemberInfo_Package;
 
 import java.util.Scanner;
 
-public class VIP extends Member {
+@SuppressWarnings("serial")
+public class VIP extends MemberInfo {
 	protected boolean mGender=true; //true : 남성 //false : 여성
 	protected String tmpmGender=null;
 	protected String mAddress=null;
 	protected int mAge=0;
 
 	public void setMemberInfo() {
+		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 		System.out.print("이름을 입력해주세요 : ");
 		mName= input.nextLine();
