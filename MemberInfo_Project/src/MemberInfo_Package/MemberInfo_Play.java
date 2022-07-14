@@ -8,12 +8,12 @@ public class MemberInfo_Play {
 
 
 	public static void main(String[] args) throws SQLException{
-		
-		MemberInfo m = new MemberInfo();
-		Connection c = m.ConnectDB();
-		//m.InsertMember(m.ConnectDB());
-		m.SelectMember(c);
-		
+//		
+//		MemberInfo m = new MemberInfo();
+//		Connection c = m.ConnectDB();
+//		//m.InsertMember(m.ConnectDB());
+//		m.SelectMember(c);
+//		
 		
 		
 	}// end of main
